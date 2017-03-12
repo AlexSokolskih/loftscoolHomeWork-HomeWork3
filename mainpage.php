@@ -1,4 +1,7 @@
 
+<?php
+$main -> showHeader('mainpage');
+?>
 
     <div class="container">
 

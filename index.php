@@ -5,7 +5,8 @@
  * Date: 12.03.2017
  * Time: 19:15
  */
-
+session_start();
+$_SESSION['test']='Hello world!';
 require_once 'main.php';
 
 $main = new Main;
@@ -42,15 +43,12 @@ $page=$_GET['page'];
 <body>
 
 <?php
-$main -> showHeader();
+
  switch ($page){
      case 'filelist':
          require_once 'filelist.php';
          break;
-     case 'list':
-         require_once 'usersList.php';
-         break;
-     case 'list':
+     case 'usersList':
          require_once 'usersList.php';
          break;
      case 'reg':

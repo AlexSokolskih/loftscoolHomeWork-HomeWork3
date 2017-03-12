@@ -8,8 +8,28 @@
  */
 class Main
 {
-    public function showHeader()
+    public function showHeader($activPage)
     {
+        $filelistActive = '';
+        $userlistActive = '';
+        $regActive = '';
+        $mainpageActive = '';
+        switch ($activPage){
+            case 'filelist':
+                 $filelistActive = 'class="active"';
+                break;
+            case 'usersList':
+                $userlistActive = 'class="active"';
+                break;
+            case 'reg':
+                $regActive = 'class="active"';
+                break;
+            default:
+                $mainpageActive = 'class="active"';
+                break;
+
+        }
+
         echo '
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -20,14 +40,14 @@ class Main
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">домашняя№3 Сокольских Александр</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="mainpage.php">Авторизация</a></li>
-            <li><a href="reg.php">Регистрация</a></li>
-            <li><a href="usersList.php">Список пользователей</a></li>
-            <li><a href="filelist.php">Список файлов</a></li>
+            <li '.$mainpageActive.' ><a href="index.php?page=mainpage">Авторизация</a></li>
+            <li '.$regActive.' ><a href="index.php?page=reg">Регистрация</a></li>
+            <li '.$userlistActive.' ><a href="index.php?page=usersList">Список пользователей</a></li>
+            <li '.$filelistActive.' ><a href="index.php?page=filelist">Список файлов</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
