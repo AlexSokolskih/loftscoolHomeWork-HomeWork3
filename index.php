@@ -7,18 +7,25 @@
  */
 
 require_once 'main.php';
+require_once 'dataBase.php';
 
 session_start();
-$_SESSION['test'] = 'Hello world!';
 
 $main = new Main;
+$dataBase = new DataBase;
+
+$dataBase->showUsers();
+
 var_dump($_POST);
 echo '<br>';
 var_dump($_GET);
 
 
-$page = $_GET['page'];
-$event = $_GET['event'];
+$page = htmlspecialchars($_GET['page']);
+$event = htmlspecialchars($_GET['event']);
+
+$user = htmlspecialchars($_POST['login']);
+$password = htmlspecialchars($_POST['password']);
 
 ?>
 
@@ -54,51 +61,75 @@ $event = $_GET['event'];
 <?php
 
 
-if() {
+if ($event == 'avtorization') {
+    /*считать из бд и проверить на совпадение                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+    if ($user == 'Alex' and $password == 'secret') {
+        $message = '<p>вы авторизованы как: ' . $user . ' </p>';
+        $_SESSION['authorized'] = true;
+    } else {
+        $message = '<p>не получилось авторизоваться: ' . $user . ' </p>';
+        $_SESSION['authorized'] = false;
+    }
+} elseif ($event == 'registration') {
+    $password1 = htmlspecialchars($_POST['password1']);
+    $password2 = htmlspecialchars($_POST['password2']);
+    $newLogin = htmlspecialchars($_POST['newLogin']);
+    if ($password1 !== $password2){
+        $message='<p> введенные пароли не совпадают <p>';
+    } else {
+        $message = '<p> пользователь '.$newLogin.' успешно добавлен<p>';
 
+        /*записать в бд и может проверить на наличие в бд такого перед вставкой !!!!!!!!!!!!!!!!!!!!!!!!!*/
+    }
 }
+
+
 
 
 if ($_SESSION['authorized'] == true) {
     switch ($page) {
-    case 'filelist':
-        $main->showHeader('filelist');
-        include_once 'filelist.php';
-        break;
-    case 'usersList':
-        $main->showHeader('usersList');
-        include_once'usersList.php';
-        break;
-    case 'reg':
-        $main->showHeader('reg');
-        include_once'reg.php';
-        break;
-    default:
-        $main->showHeader('mainpage');
-        include_once'mainpage.php';
-        break;
+        case 'filelist':
+            $main->showHeader('filelist');
+            include_once 'filelist.php';
+            break;
+        case 'usersList':
+            $main->showHeader('usersList');
+            include_once 'usersList.php';
+            break;
+        case 'reg':
+            $main->showHeader('reg');
+            echo $message;
+            include_once 'reg.php';
+            break;
+        default:
+            $main->showHeader('mainpage');
+            echo $message;
+            include_once 'mainpage.php';
+            break;
     }
 
 } else {
     switch ($page) {
-    case 'filelist':
-        $main->showHeader('mainpage');
-        echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
-        include_once'mainpage.php';
-        break;
-    case 'usersList':
-        $main->showHeader('mainpage');
-        echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
-        include_once'mainpage.php';
-        break;
-    case 'reg':
-        $main->showHeader('reg');
-        include_once'reg.php';
-        break;
-    default:
-        $main->showHeader('mainpage');
-        include_once'mainpage.php';
-        break;
+        case 'filelist':
+            $main->showHeader('mainpage');
+            echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
+            include_once 'mainpage.php';
+            break;
+        case 'usersList':
+            $main->showHeader('mainpage');
+            echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
+            include_once 'mainpage.php';
+            break;
+        case 'reg':
+            $main->showHeader('reg');
+            echo $message;
+            include_once 'reg.php';
+            break;
+        default:
+            $main->showHeader('mainpage');
+            echo $message;
+            include_once 'mainpage.php';
+            break;
     }
 
 }
