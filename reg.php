@@ -1,7 +1,4 @@
 
-<?php
-$main -> showHeader('reg');
-?>
     <div class="container">
 
       <div class="form-container">

@@ -1,6 +1,3 @@
-<?php
-$main -> showHeader('filelist');
-?>
 
     <div class="container">
     <h1>Запретная зона, доступ только авторизированному пользователю</h1>

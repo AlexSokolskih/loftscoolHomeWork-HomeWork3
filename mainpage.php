@@ -1,22 +1,18 @@
 
-<?php
-$main -> showHeader('mainpage');
-?>
-
     <div class="container">
 
       <div class="form-container">
-        <form class="form-horizontal" action="">
+        <form class="form-horizontal" action="index.php?page=mainpage&event=registration" method="post">
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputEmail3" placeholder="Логин">
+              <input type="text" class="form-control" id="inputEmail3" name="login" placeholder="Логин">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="Пароль">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Пароль" name="password">
             </div>
           </div>
           <div class="form-group">
@@ -26,6 +22,10 @@ $main -> showHeader('mainpage');
               Нет аккаунта? <a href="index.php?page=reg">Зарегистрируйтесь</a>
             </div>
           </div>
+        </form>
+
+        <form action="/index.php">
+          <input type="submit" value="sddsfdsfdsfdsfdsfdsf">
         </form>
       </div>
 

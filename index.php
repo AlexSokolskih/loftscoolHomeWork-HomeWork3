@@ -5,12 +5,21 @@
  * Date: 12.03.2017
  * Time: 19:15
  */
-session_start();
-$_SESSION['test']='Hello world!';
+
 require_once 'main.php';
 
+session_start();
+$_SESSION['test'] = 'Hello world!';
+
 $main = new Main;
-$page=$_GET['page'];
+var_dump($_POST);
+echo '<br>';
+var_dump($_GET);
+
+
+$page = $_GET['page'];
+$event = $_GET['event'];
+
 ?>
 
 
@@ -44,23 +53,58 @@ $page=$_GET['page'];
 
 <?php
 
- switch ($page){
-     case 'filelist':
-         require_once 'filelist.php';
-         break;
-     case 'usersList':
-         require_once 'usersList.php';
-         break;
-     case 'reg':
-         require_once 'reg.php';
-         break;
-     default:
-         require_once 'mainpage.php';
-         break;
 
- }
+if() {
 
-$main -> showFuter();
+}
+
+
+if ($_SESSION['authorized'] == true) {
+    switch ($page) {
+    case 'filelist':
+        $main->showHeader('filelist');
+        include_once 'filelist.php';
+        break;
+    case 'usersList':
+        $main->showHeader('usersList');
+        include_once'usersList.php';
+        break;
+    case 'reg':
+        $main->showHeader('reg');
+        include_once'reg.php';
+        break;
+    default:
+        $main->showHeader('mainpage');
+        include_once'mainpage.php';
+        break;
+    }
+
+} else {
+    switch ($page) {
+    case 'filelist':
+        $main->showHeader('mainpage');
+        echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
+        include_once'mainpage.php';
+        break;
+    case 'usersList':
+        $main->showHeader('mainpage');
+        echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
+        include_once'mainpage.php';
+        break;
+    case 'reg':
+        $main->showHeader('reg');
+        include_once'reg.php';
+        break;
+    default:
+        $main->showHeader('mainpage');
+        include_once'mainpage.php';
+        break;
+    }
+
+}
+
+
+$main->showFuter();
 ?>
 
 </body>
