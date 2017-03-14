@@ -50,3 +50,6 @@ ALTER TABLE `table_name`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+INSERT INTO `loftschool`.`table_name` (`id`, `login`, `password`, `name`, `age`, `description`, `photo`) VALUES ('1', 'user1', 'user1', 'юзя', '15', 'йфяцыыч', '1416741131.jpg'), ('2', 'user2', 'user2', 'юзя2', '12', 'вфывфывфывфывфывфыв', '20170113094108681.jpg');

@@ -33,6 +33,19 @@ class DataBase
         while ($row = $userslist->fetch()){
             echo $row['name'].'<br>';
         }
+    }
+
+    public function getUsersList()
+    {
+        $userslist = $this->pdo->query('SELECT * FROM table_name');
+        while ($row = $userslist->fetch()){
+            $users[]=$row;
+        }
+        return $users;
+    }
+
+    public function getUserForId($userId)
+    {
 
     }
 

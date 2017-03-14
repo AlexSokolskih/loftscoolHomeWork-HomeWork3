@@ -62,7 +62,17 @@ class Main
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/bootstrap.min.js"></script>';
+    }
 
+    public function savePhoto()
+    {
+        $uploaddir = '/var/www/uploads/';
+        echo '<br>';
+        var_dump($_FILES);
+        $tmp_name = $_FILES['userfoto']['tmp_name'] ;
+        echo '<p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'.$tmp_name.'</p>';
+        move_uploaded_file($_FILES['userfoto']['tmp_name'], '/img/new.phg');
+        
     }
 
 }

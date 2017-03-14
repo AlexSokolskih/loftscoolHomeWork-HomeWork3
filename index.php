@@ -15,6 +15,7 @@ $main = new Main;
 $dataBase = new DataBase;
 
 //$dataBase->showUsers();
+var_dump($dataBase->getUsersList());
 
 var_dump($_POST);
 echo '<br>';
@@ -61,7 +62,6 @@ $password = htmlspecialchars($_POST['password']);
 <?php
 
 
-
 if ($event == 'avtorization') {
     /*считать из бд и проверить на совпадение                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
     if ($user == 'Alex' and $password == 'secret') {
@@ -75,19 +75,34 @@ if ($event == 'avtorization') {
     $password1 = htmlspecialchars($_POST['password1']);
     $password2 = htmlspecialchars($_POST['password2']);
     $newLogin = htmlspecialchars($_POST['newLogin']);
-    if ($password1 !== $password2){
-        $message='<p> введенные пароли не совпадают <p>';
+    if ($password1 !== $password2) {
+        $message = '<p> введенные пароли не совпадают <p>';
     } else {
-        $message = '<p> пользователь '.$newLogin.' успешно добавлен<p>';
+        $message = '<p> пользователь ' . $newLogin . ' успешно добавлен<p>';
 
         /*записать в бд и может проверить на наличие в бд такого перед вставкой !!!!!!!!!!!!!!!!!!!!!!!!!*/
     }
-} elseif ($event == 'registration') {}
+}
 
 
 
 
 if ($_SESSION['authorized'] == true) {
+
+    if ($event == 'saveUser') {
+        $name = htmlspecialchars($_POST['name']);
+        $age = htmlspecialchars($_POST['age']);
+        $decscription = htmlspecialchars($_POST['decscription']);
+        $main->savePhoto();
+        /*$foto обработать и записать в бд*/
+
+    } elseif ($event == 'editinguser') {
+        $userId = htmlspecialchars($_GET['userid']);
+    } elseif ($event == 'deleteuser') {
+        $userId  = htmlspecialchars($_GET['userid']);
+        /* удалить из бд пользователя */
+    }
+
     switch ($page) {
         case 'filelist':
             $main->showHeader('filelist');

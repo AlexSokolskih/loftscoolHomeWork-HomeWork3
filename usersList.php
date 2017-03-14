@@ -21,6 +21,25 @@
             <a href="">Удалить пользователя</a>
           </td>
         </tr>
+        <?php
+        $userslist =  $dataBase->getUsersList();
+        foreach ($userslist  as  $value) {
+
+          echo '<tr>
+            <td>'.$value['login'].'</td>
+            <td>'.$value['name'].'</td>
+            <td>'.$value['age'].'</td>
+            <td>'.$value['description'].'</td>
+            <td><img src="/img/'.$value['photo'].'" alt=""></td>
+            <td>    
+              <a href="index.php?page=userEditing&event=deleteuser&userid='.$value['id'].'">Удалить пользователя</a>
+              <a href="index.php?page=userEditing&event=editinguser&userid='.$value['id'].'">редактировать пользователя</a>
+            </td>
+          </tr>';
+        }
+
+        ?>
+
       </table>
 
     </div><!-- /.container -->

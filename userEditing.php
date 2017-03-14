@@ -3,7 +3,8 @@
 <div class="container">
 
     <div class="form-container">
-        <form class="form-horizontal" action="index.php?page=usersList&event=userEditing" method="post">
+        <form class="form-horizontal" action="index.php?page=usersList&event=saveUser" method="post" enctype="multipart/form-data">
+            <input type="hidden" class="form-control" id="userid" name="userid" value="<?php echo '$userId'; ?>">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Имя</label>
                 <div class="col-sm-10 ">
@@ -25,16 +26,15 @@
             <div class="form-group">
                 <label for="foto" class="col-sm-2 control-label">Фото</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" id="foto" placeholder="Фотография" name="foto">
+                    <input type="file" class="form-control" id="foto" placeholder="Фотография" name="userfoto">
                 </div>
             </div>
 
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Зарегистрироваться</button>
-                    <br><br>
-                    Зарегистрированы? <a href="index.php?page=mainPage">Авторизируйтесь</a>
+                    <button type="submit" class="btn btn-default">Отправить</button>
+
                 </div>
             </div>
         </form>
