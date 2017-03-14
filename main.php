@@ -8,7 +8,7 @@
  */
 class Main
 {
-    public function showHeader($activPage)
+    public function showHeader($activPage='')
     {
         $filelistActive = '';
         $userlistActive = '';

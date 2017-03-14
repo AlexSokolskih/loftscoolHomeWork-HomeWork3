@@ -14,7 +14,7 @@ session_start();
 $main = new Main;
 $dataBase = new DataBase;
 
-$dataBase->showUsers();
+//$dataBase->showUsers();
 
 var_dump($_POST);
 echo '<br>';
@@ -61,6 +61,7 @@ $password = htmlspecialchars($_POST['password']);
 <?php
 
 
+
 if ($event == 'avtorization') {
     /*считать из бд и проверить на совпадение                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
     if ($user == 'Alex' and $password == 'secret') {
@@ -81,7 +82,7 @@ if ($event == 'avtorization') {
 
         /*записать в бд и может проверить на наличие в бд такого перед вставкой !!!!!!!!!!!!!!!!!!!!!!!!!*/
     }
-}
+} elseif ($event == 'registration') {}
 
 
 
@@ -101,6 +102,11 @@ if ($_SESSION['authorized'] == true) {
             echo $message;
             include_once 'reg.php';
             break;
+        case 'userEditing':
+            $main->showHeader('usersList');
+            echo $message;
+            include_once 'userEditing.php';
+            break;
         default:
             $main->showHeader('mainpage');
             echo $message;
@@ -117,6 +123,11 @@ if ($_SESSION['authorized'] == true) {
             break;
         case 'usersList':
             $main->showHeader('mainpage');
+            echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
+            include_once 'mainpage.php';
+            break;
+        case 'userEditing':
+            $main->showHeader('usersList');
             echo '<p>Не только лишь все могут просматривать эту страницу!   Авторизуйтесь</p>';
             include_once 'mainpage.php';
             break;
