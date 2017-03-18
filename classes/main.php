@@ -24,9 +24,9 @@ class Main
             case 'reg':
                 $regActive = 'class="active"';
                 break;
-            case '$registration':
+            case 'registration':
                 $registrationActive = 'class="active"';
-                break
+                break;
             default:
                 $mainpageActive = 'class="active"';
                 break;
