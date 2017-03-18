@@ -13,7 +13,7 @@ class Main
         $filelistActive = '';
         $userlistActive = '';
         $regActive = '';
-        $mainpageActive = '';
+        $registrationActive = '';
         switch ($activPage){
             case 'filelist':
                  $filelistActive = 'class="active"';
@@ -24,6 +24,9 @@ class Main
             case 'reg':
                 $regActive = 'class="active"';
                 break;
+            case '$registration':
+                $registrationActive = 'class="active"';
+                break
             default:
                 $mainpageActive = 'class="active"';
                 break;
@@ -44,10 +47,10 @@ class Main
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li '.$mainpageActive.' ><a href="index.php?page=mainpage">Авторизация</a></li>
-            <li '.$regActive.' ><a href="index.php?page=reg">Регистрация</a></li>
-            <li '.$userlistActive.' ><a href="index.php?page=usersList">Список пользователей</a></li>
-            <li '.$filelistActive.' ><a href="index.php?page=filelist">Список файлов</a></li>
+            <li '.$regActive. ' ><a href="/loftscoolHomeWork-HomeWork3/reg.php">Авторизация</a></li>
+            <li ' .$registrationActive. ' ><a href="/loftscoolHomeWork-HomeWork3/registration.php">Регистрация</a></li>
+            <li ' .$userlistActive. ' ><a href="/loftscoolHomeWork-HomeWork3/usersList.php">Список пользователей</a></li>
+            <li ' .$filelistActive. ' ><a href="/loftscoolHomeWork-HomeWork3/filelist.php">Список файлов</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -60,8 +63,8 @@ class Main
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/bootstrap.min.js"></script>';
+    <script src="../js/main.js"></script>
+    <script src="../js/bootstrap.min.js"></script>';
     }
 
     public function savePhoto()
@@ -69,10 +72,11 @@ class Main
         $uploaddir = '/var/www/uploads/';
         echo '<br>';
         var_dump($_FILES);
-        $tmp_name = $_FILES['userfoto']['tmp_name'] ;
-        echo '<p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'.$tmp_name.'</p>';
-        move_uploaded_file($_FILES['userfoto']['tmp_name'], '/img/new.phg');
-        
+           $filename = date('U').rand(1,100000);
+           $extension =  mb_strrchr($_FILES['userfoto']['name'],'.');
+           move_uploaded_file($_FILES['userfoto']['tmp_name'], dirname(__FILE__).'/photos/'.$filename.$extension);
+           echo "<p>".dirname(__FILE__).'/photos/'.$filename.$extension.'</p>';
+
     }
 
 }

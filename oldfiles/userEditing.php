@@ -3,7 +3,7 @@
 <div class="container">
 
     <div class="form-container">
-        <form class="form-horizontal" action="index.php?page=usersList&event=saveUser" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="index.php?page=usersList&event=userEditing"thod="post" enctype="multipart/form-data">
             <input type="hidden" class="form-control" id="userid" name="userid" value="<?php echo '$userId'; ?>">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Имя</label>
