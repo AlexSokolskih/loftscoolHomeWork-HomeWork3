@@ -9,8 +9,8 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-include_once 'classes/dataBase.php';
-include_once 'classes/main.php';
+require_once 'classes/dateBase.php';
+require_once 'classes/main.php';
 
 $page = 'registration';
 $dataBase = new DataBase();
@@ -24,6 +24,11 @@ $newLogin = htmlspecialchars($_POST['newLogin']);
 
 if ($password1 !== $password2) {
     $message = '<p> введенные пароли не совпадают <p>';
+} elseif ($dataBase->is_userInDataBase($newLogin)) {
+    $message = '<p> Такой пользователь существует </p>';
+} elseif (true) {
+
+
 }
 
 ?>
@@ -59,7 +64,7 @@ if ($password1 !== $password2) {
 
 <?php
 $main->showHeader($page);
-$dataBase->is_userInDataBase('Вася');
+//$dataBase->is_userInDataBase('Вася');
 echo $message;
 ?>
 

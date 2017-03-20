@@ -9,8 +9,8 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-include_once 'classes/dataBase.php';
-include_once 'classes/main.php';
+require_once 'classes/dateBase.php';
+require_once 'classes/main.php';
 
 $page = 'reg';
 $dataBase = new DataBase();
@@ -98,7 +98,7 @@ $main ->showHeader($page);
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-default">Войти</button>
               <br><br>
-Нет аккаунта? <a href="index.php?page=reg">Зарегистрируйтесь</a>
+Нет аккаунта? <a href="registration.php">Зарегистрируйтесь</a>
             </div>
           </div>
         </form>
