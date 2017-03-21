@@ -16,9 +16,21 @@ $page = 'registration';
 $dataBase = new DataBase();
 $main = new Main();
 
-$password1 = htmlspecialchars($_POST['password1']);
-$password2 = htmlspecialchars($_POST['password2']);
-$newLogin = htmlspecialchars($_POST['newLogin']);
+$password1 = '';
+$password2 = '';
+$newLogin = '';
+
+if(isset($_POST['password1'])) {
+    $password1 = htmlspecialchars($_POST['password1']);
+}
+if(isset($_POST['password2'])) {
+    $password2 = htmlspecialchars($_POST['password2']);
+}
+if(isset($_POST['newLogin'])) {
+    $newLogin = htmlspecialchars($_POST['newLogin']);
+}
+
+
 
 
 
@@ -26,9 +38,13 @@ if ($password1 !== $password2) {
     $message = '<p> введенные пароли не совпадают <p>';
 } elseif ($dataBase->is_userInDataBase($newLogin)) {
     $message = '<p> Такой пользователь существует </p>';
-} elseif (true) {
-
-
+} elseif ($newLogin == '' or $password1 == '') {
+    $message = '<p> Пустое поле </p>';
+}elseif ($dataBase->saveNewUser($newLogin,$password1)) {
+    header('Location:/loftscoolHomeWork-HomeWork3/reg.php');
+    exit;
+} else {
+    $message = '<p> Не получилось добавить в базу </p>';
 }
 
 ?>

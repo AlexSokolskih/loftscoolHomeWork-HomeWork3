@@ -46,6 +46,14 @@ class DataBase
 
     public function getUserForId($userId)
     {
+        $stmt = $this->pdo->prepare('SELECT * FROM table_name WHERE id= :id');
+        $stmt->execute([$userId]);
+        $user = false;
+        foreach ($stmt as $row)
+        {
+            $user = $row;
+        }
+        return $user;
     }
 
     public function is_userInDataBase($login)
@@ -60,11 +68,31 @@ class DataBase
         }
     }
 
-    public function saveNewUser($login,$pasword)
+    public function saveNewUser($login,$password)
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM table_name WHERE login= :login');
-        $stmt->execute([$login]);
+        try
+        {
+            $stmt = $this->pdo->prepare("INSERT INTO `loftschool`.`table_name` (login, password, `name`, `age`, `description`, `photo`) VALUES (:login, :password, '', '', '', NULL)");
+            $stmt->execute(array('login' => $login, 'password'=>$password));
+            return true;
+        }
+        catch (Exception $e) {
+            var_dump($e);
+            return false;
+        }
+    }
 
+    public function deleteUser($userID)
+    {
+        try{
+            $stmt = $this->pdo->prepare('DELETE FROM table_name WHERE id = :id');
+            $stmt->execute([$userID]);
+            return true;
+        }
+        catch (Exception $e) {
+            var_dump($e);
+            return false;
+        }
     }
 
 }
