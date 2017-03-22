@@ -95,4 +95,19 @@ class DataBase
         }
     }
 
+    public function updateUser($id, $name, $description, $age, $photo)
+    {
+        try{
+            $stmt = $this->pdo->prepare('UPDATE `loftschool`.`table_name` SET name = :name, `age` = :age, description = :description, photo = :photo WHERE id = :id');
+            $stmt->execute(array('id' => $id, 'name'=>$name, 'description' => $description, 'age' => $age, 'photo' => $photo));
+            return true;
+        }
+        catch (Exception $e) {
+            var_dump($e);
+            return false;
+        }
+        
+    }
+
+
 }

@@ -2,10 +2,14 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+ob_start();
 session_start();
 if ($_SESSION['authorized'] != true) {
     header('Location:/loftscoolHomeWork-HomeWork3/reg.php');
+    exit;
 }
+
+var_dump($_SESSION['authorized']);
 
 require_once 'classes/dateBase.php';
 require_once 'classes/main.php';
@@ -23,8 +27,9 @@ if($event == 'delete') {
 
 if($event == 'edituser') {
     header('Location:/loftscoolHomeWork-HomeWork3/userEditing.php?userid='.$userId);
+    exit;
 }
-
+ob_end_flush();
 
 ?>
 
@@ -83,7 +88,7 @@ $main->showHeader($page);
             <td>' . $value['name'] . '</td>
             <td>' . $value['age'] . '</td>
             <td>' . $value['description'] . '</td>
-            <td><img src="/img/' . $value['photo'] . '" alt=""></td>
+            <td><img src="photos/' . $value['photo'] . '" alt=""></td>
             <td> 
                <form action="usersList.php" method="post">
                     <input type="hidden" name="userid" value="' . $value['id'] . '">                   

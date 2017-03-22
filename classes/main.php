@@ -71,12 +71,13 @@ class Main
     {
         $uploaddir = '/var/www/uploads/';
         echo '<br>';
-        var_dump($_FILES);
+        //var_dump($_FILES);
            $filename = date('U').rand(1,100000);
            $extension =  mb_strrchr($_FILES['userfoto']['name'],'.');
-           move_uploaded_file($_FILES['userfoto']['tmp_name'], dirname(__FILE__).'/photos/'.$filename.$extension);
-           echo "<p>".dirname(__FILE__).'/photos/'.$filename.$extension.'</p>';
+           move_uploaded_file($_FILES['userfoto']['tmp_name'], 'photos/'.$filename.$extension);
+           //echo "<p>".dirname(__FILE__).'/photos/'.$filename.$extension.'</p>';
 
+        return $filename.$extension;
     }
 
 }

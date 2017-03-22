@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+ob_start();
 session_start();
 if ($_SESSION['authorized'] != true) {
     header('Location:/loftscoolHomeWork-HomeWork3/reg.php');
@@ -14,15 +14,26 @@ $page = 'userEditing';
 $dataBase = new DataBase();
 $main = new Main();
 
-if (filter_var($_GET['userid'],FILTER_VALIDATE_INT)){
+if (filter_var($_GET['userid'], FILTER_VALIDATE_INT)) {
     $userid = $_GET['userid'];
-}
-else {
-    header('Location:/loftscoolHomeWork-HomeWork3/usersList.php');
+} elseif ($_POST['action'] == 'updateUser') {
+    $useridForUpdate = htmlspecialchars($_POST['userid']);
+    $action = htmlspecialchars($_POST['action']);
+    $name = htmlspecialchars($_POST['name']);
+    $age = htmlspecialchars($_POST['age']);
+    $decscription = htmlspecialchars($_POST['decscription']);
+    $photo = htmlspecialchars($_POST['photo']);
+    $photo=$main->savePhoto();
+    if ($dataBase->updateUser($useridForUpdate, $name, $decscription, $age, $photo)) {
+        header('Location:/loftscoolHomeWork-HomeWork3/usersList.php');
+        exit;
+    }
+
 }
 
 $user = $dataBase->getUserForId($userid);
-var_dump($user);
+var_dump($_POST);
+
 
 ?>
 
@@ -64,23 +75,27 @@ $main->showHeader($page);
 
     <div class="form-container">
         <form class="form-horizontal" action="userEditing.php" method="post" enctype="multipart/form-data">
-            <input type="hidden" class="form-control" id="userid" name="userid" value="<?php echo '$userId'; ?>">
+            <input type="hidden" class="form-control" id="userid" name="userid" value="<?php echo $userid; ?>">
+            <input type="hidden" class="form-control" id="action" name="action" value="updateUser">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Имя</label>
                 <div class="col-sm-10 ">
-                    <input type="text" class="form-control" id="name" placeholder="Имя" name="name" value="<?php echo $user['name']; ?>">
+                    <input type="text" class="form-control" id="name" placeholder="Имя" name="name"
+                           value="<?php echo $user['name']; ?>">
                 </div>
             </div>
             <div class="form-group">
                 <label for="age" class="col-sm-2 control-label">Возраст</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="age" placeholder="Возраст" name="age" value="<?php echo $user['age']; ?>">
+                    <input type="text" class="form-control" id="age" placeholder="Возраст" name="age"
+                           value="<?php echo $user['age']; ?>">
                 </div>
             </div>
             <div class="form-group">
                 <label for="decscription" class="col-sm-2 control-label">о себе</label>
                 <div class="col-sm-10">
-                    <textarea name="decscription" id="decscription" cols="45" rows="10" placeholder="О себе"><?php echo $user['description']; ?>"</textarea>
+                    <textarea name="decscription" id="decscription" cols="45" rows="10"
+                              placeholder="О себе"><?php echo $user['description']; ?>"</textarea>
                 </div>
             </div>
             <div class="form-group">
