@@ -22,6 +22,7 @@ $newLogin = '';
 
 if(isset($_POST['password1'])) {
     $password1 = htmlspecialchars($_POST['password1']);
+    $criptPassword = crypt($password1, '$6$naborSimvolovForSalt');
 }
 if(isset($_POST['password2'])) {
     $password2 = htmlspecialchars($_POST['password2']);
@@ -40,7 +41,7 @@ if ($password1 !== $password2) {
     $message = '<p> Такой пользователь существует </p>';
 } elseif ($newLogin == '' or $password1 == '') {
     $message = '<p> Пустое поле </p>';
-}elseif ($dataBase->saveNewUser($newLogin,$password1)) {
+}elseif ($dataBase->saveNewUser($newLogin,$criptPassword)) {
     header('Location:/loftscoolHomeWork-HomeWork3/reg.php');
     exit;
 } else {

@@ -69,12 +69,52 @@ class Main
 
     public function savePhoto()
     {
+        // TODO! добавить ресайз изображений
         $uploaddir = '/var/www/uploads/';
-        echo '<br>';
-        //var_dump($_FILES);
+        ini_set('upload_max_filesize', '2M');
+
+
+        if (empty($_FILES['userfoto'])){
+            $file= null;
+        }else{
+            $file= $_FILES['userfoto'];
+        }
+
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $img_exts = ['jpeg', 'jpg', 'png', 'gif'];
+
+        if (! in_array($extension, $img_exts)){
+            die('Это не картинка 1');
+        }
+
+        if ($file['error'] != UPLOAD_ERR_OK){
+            die('ошибка при загрузке 2');
+        }
+
+        $img_mimetype = ['png' => 'image/png',
+            'jpe' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml'];
+
+
+
+        if (! in_array(mime_content_type($file['tmp_name']), $img_mimetype)){
+            die ('не правильный формат файла 3');
+        }
+
+
+
+
            $filename = date('U').rand(1,100000);
-           $extension =  mb_strrchr($_FILES['userfoto']['name'],'.');
-           move_uploaded_file($_FILES['userfoto']['tmp_name'], 'photos/'.$filename.$extension);
+
+           move_uploaded_file($file['tmp_name'], 'photos/'.$filename.$extension);
            //echo "<p>".dirname(__FILE__).'/photos/'.$filename.$extension.'</p>';
 
         return $filename.$extension;

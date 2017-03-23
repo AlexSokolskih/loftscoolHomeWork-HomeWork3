@@ -88,7 +88,7 @@ $main->showHeader($page);
             <td>' . $value['name'] . '</td>
             <td>' . $value['age'] . '</td>
             <td>' . $value['description'] . '</td>
-            <td><img src="photos/' . $value['photo'] . '" alt=""></td>
+            <td><img src="photos/' . $value['photo'] . '" alt="" width="100"></td>
             <td> 
                <form action="usersList.php" method="post">
                     <input type="hidden" name="userid" value="' . $value['id'] . '">                   
