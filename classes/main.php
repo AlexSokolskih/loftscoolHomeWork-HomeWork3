@@ -8,15 +8,15 @@
  */
 class Main
 {
-    public function showHeader($activPage='')
+    public function showHeader($activPage = '')
     {
         $filelistActive = '';
         $userlistActive = '';
         $regActive = '';
         $registrationActive = '';
-        switch ($activPage){
+        switch ($activPage) {
             case 'filelist':
-                 $filelistActive = 'class="active"';
+                $filelistActive = 'class="active"';
                 break;
             case 'usersList':
                 $userlistActive = 'class="active"';
@@ -47,10 +47,10 @@ class Main
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li '.$regActive. ' ><a href="/loftscoolHomeWork-HomeWork3/reg.php">Авторизация</a></li>
-            <li ' .$registrationActive. ' ><a href="/loftscoolHomeWork-HomeWork3/registration.php">Регистрация</a></li>
-            <li ' .$userlistActive. ' ><a href="/loftscoolHomeWork-HomeWork3/usersList.php">Список пользователей</a></li>
-            <li ' .$filelistActive. ' ><a href="/loftscoolHomeWork-HomeWork3/filelist.php">Список файлов</a></li>
+            <li ' . $regActive . ' ><a href="/loftscoolHomeWork-HomeWork3/reg.php">Авторизация</a></li>
+            <li ' . $registrationActive . ' ><a href="/loftscoolHomeWork-HomeWork3/registration.php">Регистрация</a></li>
+            <li ' . $userlistActive . ' ><a href="/loftscoolHomeWork-HomeWork3/usersList.php">Список пользователей</a></li>
+            <li ' . $filelistActive . ' ><a href="/loftscoolHomeWork-HomeWork3/filelist.php">Список файлов</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -74,20 +74,20 @@ class Main
         ini_set('upload_max_filesize', '2M');
 
 
-        if (empty($_FILES['userfoto'])){
-            $file= null;
-        }else{
-            $file= $_FILES['userfoto'];
+        if (empty($_FILES['userfoto'])) {
+            $file = null;
+        } else {
+            $file = $_FILES['userfoto'];
         }
 
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $img_exts = ['jpeg', 'jpg', 'png', 'gif'];
 
-        if (! in_array($extension, $img_exts)){
+        if (!in_array($extension, $img_exts)) {
             die('Это не картинка 1');
         }
 
-        if ($file['error'] != UPLOAD_ERR_OK){
+        if ($file['error'] != UPLOAD_ERR_OK) {
             die('ошибка при загрузке 2');
         }
 
@@ -104,20 +104,37 @@ class Main
             'svgz' => 'image/svg+xml'];
 
 
-
-        if (! in_array(mime_content_type($file['tmp_name']), $img_mimetype)){
+        if (!in_array(mime_content_type($file['tmp_name']), $img_mimetype)) {
             die ('не правильный формат файла 3');
         }
 
 
+        $filename = date('U') . rand(1, 100000);
+
+        move_uploaded_file($file['tmp_name'], 'photos/' . $filename . '.' . $extension);
+
+        $imageSize = getimagesize('photos/' . $filename . '.' . $extension);
 
 
-           $filename = date('U').rand(1,100000);
+        $image_p = imagecreatetruecolor($imageSize[0]-1, $imageSize[1]);
+        $image = imagecreatefromjpeg('photos/' . $filename . '.' . $extension);
+        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $imageSize[0], $imageSize[1], $imageSize[0], $imageSize[1]);
+        imagejpeg($image_p, 'photos/' . $filename . '.' . $extension, 100);
 
-           move_uploaded_file($file['tmp_name'], 'photos/'.$filename.$extension);
-           //echo "<p>".dirname(__FILE__).'/photos/'.$filename.$extension.'</p>';
 
-        return $filename.$extension;
+
+        return $filename . '.' . $extension;
+    }
+
+    public function cpyptPassword($password)
+    {
+        $criptPassword = crypt($password, '$6$naborSimvolovForSalt');
+        return $criptPassword;
+    }
+
+    public function deletefileImage($filename)
+    {
+        unlink('photos/' . $filename);
     }
 
 }

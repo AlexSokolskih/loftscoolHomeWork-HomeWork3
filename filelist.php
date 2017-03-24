@@ -2,7 +2,6 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-ob_start();
 session_start();
 if ($_SESSION['authorized'] != true) {
     header('Location:/loftscoolHomeWork-HomeWork3/reg.php');
@@ -12,24 +11,28 @@ if ($_SESSION['authorized'] != true) {
 require_once 'classes/dateBase.php';
 require_once 'classes/main.php';
 
-$page = 'usersList';
+$page = 'filelist';
 $dataBase = new DataBase();
 $main = new Main();
 
 $event = htmlspecialchars($_POST['event']);
-$userId = htmlspecialchars($_POST['userid']);
+$fileName = '';
 
-if ($event == 'delete') {
-    $user = $dataBase->getUserForId($userId);
-    $main->deletefileImage($user['photo']);
-    $dataBase->deleteUser($userId);
+var_dump($_POST);
+
+if ($event == 'deletefile') {
+    $filesInDir = scandir('photos/');
+    for ($i = 2; $i < count($filesInDir); $i++) {
+        if (htmlspecialchars($_POST['filename']) == $filesInDir[$i]) {
+            $fileName = $filesInDir[$i];
+        }
+    }
+    if ($fileName != '') {
+        $main->deletefileImage($fileName);
+    }
 }
 
-if ($event == 'edituser') {
-    header('Location:/loftscoolHomeWork-HomeWork3/userEditing.php?userid=' . $userId);
-    exit;
-}
-ob_end_flush();
+
 ?>
 
 
@@ -61,48 +64,43 @@ ob_end_flush();
 </head>
 <body>
 
-
 <?php
 $main->showHeader($page);
-
 ?>
+
+
 <div class="container">
     <h1>Запретная зона, доступ только авторизированному пользователю</h1>
-    <h2>Информация выводится из базы данных</h2>
+    <h2>Информация выводится из списка файлов</h2>
     <table class="table table-bordered">
         <tr>
-            <th>Пользователь(логин)</th>
-            <th>Имя</th>
-            <th>возраст</th>
-            <th>описание</th>
+            <th>Название файла</th>
             <th>Фотография</th>
             <th>Действия</th>
         </tr>
-        <?php
-        $userslist = $dataBase->getUsersList();
-        foreach ($userslist as $value) {
 
+        <?php
+        $files = scandir('photos/');
+        for ($i = 2; $i < count($files); $i++) {
             echo '<tr>
-            <td>' . $value['login'] . '</td>
-            <td>' . $value['name'] . '</td>
-            <td>' . $value['age'] . '</td>
-            <td>' . $value['description'] . '</td>
-            <td><img src="photos/' . $value['photo'] . '" alt="" width="100"></td>
-            <td> 
-               <form action="usersList.php" method="post">
-                    <input type="hidden" name="userid" value="' . $value['id'] . '">                   
-                    <button type="submit" name="event" value="delete">Удалить пользователя </button>                             
-                    <button type="submit" name="event" value="edituser">Редактировать пользователя </button>
-              </form>
+            <td>' . $files[$i] . '</td>
+            <td><img src="photos/' . $files[$i] . '" alt="" width="100"></td>
+            <td>
+                
+            <form action="filelist.php" method="post">
+                <input type="hidden" name="filename" value="' . $files[$i] . '">
+                <button type="submit" name="event" value="deletefile">Удалить аватарку пользователя</button>            
+            </form>
             </td>
-          </tr>';
+        </tr>';
         }
 
-        ?>
 
+        ?>
     </table>
 
 </div><!-- /.container -->
+
 
 <?php
 $main->showFuter();

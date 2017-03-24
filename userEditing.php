@@ -23,7 +23,7 @@ if (filter_var($_GET['userid'], FILTER_VALIDATE_INT)) {
     $age = htmlspecialchars($_POST['age']);
     $decscription = htmlspecialchars($_POST['decscription']);
     $photo = htmlspecialchars($_POST['photo']);
-    $photo=$main->savePhoto();
+    $photo = $main->savePhoto();
     if ($dataBase->updateUser($useridForUpdate, $name, $decscription, $age, $photo)) {
         header('Location:/loftscoolHomeWork-HomeWork3/usersList.php');
         exit;
