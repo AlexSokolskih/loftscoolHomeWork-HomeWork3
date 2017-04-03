@@ -6,15 +6,11 @@
  * Time: 0:32
  */
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
-require_once 'classes/dateBase.php';
-require_once 'classes/main.php';
+require_once 'initialization.php';
 
 $page = 'registration';
-$dataBase = new DataBase();
-$main = new Main();
+
 
 $password1 = '';
 $password2 = '';

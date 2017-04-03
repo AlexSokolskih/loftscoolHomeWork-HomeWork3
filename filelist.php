@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+
+require_once 'initialization.php';
 
 session_start();
 if ($_SESSION['authorized'] != true) {
@@ -8,12 +8,8 @@ if ($_SESSION['authorized'] != true) {
     exit;
 }
 
-require_once 'classes/dateBase.php';
-require_once 'classes/main.php';
-
 $page = 'filelist';
-$dataBase = new DataBase();
-$main = new Main();
+
 
 $event = htmlspecialchars($_POST['event']);
 $fileName = '';

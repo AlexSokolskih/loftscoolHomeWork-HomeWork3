@@ -1,18 +1,22 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+/**
+ * @return array
+ */
+require_once 'initialization.php';
+
+list($dataBase, $main) = initialization();
+
+
 ob_start();
 session_start();
+
+
 if ($_SESSION['authorized'] != true) {
     header('Location:/loftscoolHomeWork-HomeWork3/reg.php');
 }
 
-require_once 'classes/dateBase.php';
-require_once 'classes/main.php';
-
 $page = 'userEditing';
-$dataBase = new DataBase();
-$main = new Main();
+
 
 if (filter_var($_GET['userid'], FILTER_VALIDATE_INT)) {
     $userid = $_GET['userid'];
@@ -32,7 +36,7 @@ if (filter_var($_GET['userid'], FILTER_VALIDATE_INT)) {
 }
 
 $user = $dataBase->getUserForId($userid);
-var_dump($_POST);
+
 
 
 ?>

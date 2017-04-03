@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+
+require_once 'initialization.php';
 
 ob_start();
 session_start();
@@ -9,12 +9,9 @@ if ($_SESSION['authorized'] != true) {
     exit;
 }
 
-require_once 'classes/dateBase.php';
-require_once 'classes/main.php';
 
 $page = 'usersList';
-$dataBase = new DataBase();
-$main = new Main();
+
 
 $event = htmlspecialchars($_POST['event']);
 $userId = htmlspecialchars($_POST['userid']);

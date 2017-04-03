@@ -6,15 +6,11 @@
  * Time: 21:08
  */
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
-require_once 'classes/dateBase.php';
-require_once 'classes/main.php';
+require_once 'initialization.php';
 
 $page = 'reg';
-$dataBase = new DataBase();
-$main = new Main();
+
 
 
 if (isset($_POST['login'])) {
